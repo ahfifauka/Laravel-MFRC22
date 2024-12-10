@@ -10,9 +10,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::prefix('/rfid')->group(function () {
-    Route::controller(RfidCardController::class)->group(function () {
-        Route::get('/get_id', 'getId')->name('rfid.getId');
-    });
+Route::controller(RfidCardController::class)->group(function () {
+    Route::get('/rfid', 'index');
+    Route::get('/rfid/show_data', 'showRfidData')->name('rfid.showData');
+    Route::get('/rfid/truncate_data', 'truncateData')->name('rfid.truncateData');
+    Route::get('/rfid/get_id', 'getId')->name('rfid.getId');
 });
