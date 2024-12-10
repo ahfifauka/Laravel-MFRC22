@@ -6,12 +6,15 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h1 class="card-title text-center pt-2">TOL SOROJA</h1>
+                    <h1 class="card-title text-center pt-2">STMIK MARDIRA INDONESIA</h1>
                 </div>
                 <div class="card-body">
-                    <div class="text-center d-flex gap-2 align-items-center justify-content-center">
-                        <h1 id="text"></h1>
-                        <h1 id="saldo"></h1>
+                    <div class="text-center d-flex flex-column gap-2 align-items-center justify-content-center">
+                        <h1 id="mahasiswa"></h1>
+                        <div class="d-flex gap-2 align-items-center justify-content-center">
+                            <h1 id="text"></h1>
+                            <h1 id="saldo"></h1>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,17 +29,20 @@
             console.log(data);
             if (data && data.hasOwnProperty('saldo')) {
             if (data.saldo !== null) {
-                $("#text").html("Saldo : ");
+                $("#mahasiswa").html(data.mahasiswa);
+                $("#text").html("Saldo Air : ");
                 $("#saldo").html(" " + data.saldo);
                 setTimeout(() => {
                     truncateData()
                 }, 2000);
             } else {
+                $("#mahasiswa").html("");
                 $("#saldo").html("");
             }
         } else {
-            $("#saldo").html("");
-            $("#text").html("Tempelkan Kartu");
+                $("#mahasiswa").html("");
+                $("#saldo").html("");
+                $("#text").html("Tempelkan KTM");
             }
         });
     }
@@ -48,8 +54,6 @@
     }
 
     $(document).ready(function() {
-        let counter = 0; // Menghitung waktu interval
-
         setInterval(function() {
             getRfidData();
         }, 1000); 

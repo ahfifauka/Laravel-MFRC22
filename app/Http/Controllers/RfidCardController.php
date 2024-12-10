@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RfidMahasiswa;
 use App\Models\TmpCard;
 use App\Models\TolRfidCard;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class RfidCardController extends Controller
     {
         // Mengambil parameter 'rfid_tag' dari query string
         $rfidTag = $request->query('rfid_tag');
-        $data = TolRfidCard::where('tag', $rfidTag)->first();
+        $data = RfidMahasiswa::where('tag', $rfidTag)->first();
 
         if ($data) {
             TmpCard::truncate();
@@ -34,8 +35,9 @@ class RfidCardController extends Controller
     {
         $tmp = TmpCard::first();
         if ($tmp) {
-            $query = TolRfidCard::where('tag', $tmp->tag)->first();
+            $query = RfidMahasiswa::where('tag', $tmp->tag)->first();
             $data = [
+                "mahasiswa" => $query->mahasiswa,
                 "saldo" => number_format($query->saldo)
             ];
             return response()->json($data);
