@@ -20,12 +20,14 @@ class RfidCardController extends Controller
         $rfidTag = $request->query('rfid_tag');
         $data = TolRfidCard::where('tag', $rfidTag)->first();
 
-        TmpCard::truncate();
-        TmpCard::create([
-            "tag"   => $data->tag
-        ]);
-
-        return response()->json($data);
+        if ($data) {
+            TmpCard::truncate();
+            TmpCard::create([
+                "tag"   => $data->tag
+            ]);
+            return response()->json($data);
+        }
+        return response()->json(null);
     }
 
     public function showRfidData()
