@@ -6,7 +6,7 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h1 class="card-title text-center pt-2">TOL SOROJA</h1>
+                    <h1 class="card-title text-center pt-2">SISTEM PARKIR</h1>
                 </div>
                 <div class="card-body">
                     <div class="text-center d-flex gap-2 align-items-center justify-content-center">
