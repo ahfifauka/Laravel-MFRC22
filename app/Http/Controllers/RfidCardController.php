@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\TmpCard;
 use App\Models\TolRfidCard;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class RfidCardController extends Controller
@@ -19,16 +20,25 @@ class RfidCardController extends Controller
     {
         // Mengambil parameter 'rfid_tag' dari query string
         $rfidTag = $request->query('rfid_tag');
-        $data = Member::where('tag', $rfidTag)->first();
+        $member = Member::where('tag', $rfidTag)->first();
+        $transaksi = Transaksi::where('tag', $rfidTag)->first();
 
-        if ($data) {
-            TmpCard::truncate();
-            TmpCard::create([
-                "tag"   => $data->tag
+        if ($transaksi) {
+            // update jam_keluar when second tapping
+            $transaksi->jam_keluar = date('H:i:s');
+            $transaksi->save();
+            // potong saldo sesuai dengan tarif
+            $member->saldo = $member->saldo - 500;
+            $member->save();
+        } else {
+            // first Tapping
+            Transaksi::create([
+                "tag"   => $rfidTag,
+                "jam_masuk" => date('H:i:s')
             ]);
-            return response()->json($data);
         }
-        return response()->json(null);
+
+        return response()->json("sukses");
     }
 
     public function showRfidData()
