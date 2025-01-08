@@ -31,7 +31,6 @@ class RfidCardController extends Controller
             $member->saldo = $member->saldo - 500;
             $member->save();
         } else {
-            // first Tapping
             Transaksi::create([
                 "tag"   => $rfidTag,
                 "jam_masuk" => date('H:i:s')
